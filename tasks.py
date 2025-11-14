@@ -41,7 +41,7 @@ def convolve_1d(input_array, kernel_array):
         output[i] = np.sum(input_array[i:i+len(kernel_array)] * kernel_array)
     return output
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
-    # Then fill the cells in the array with a loop.
+    # Then fill the cells in theegit push array with a loop.
     
 
 # -----------------------------------------------
