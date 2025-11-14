@@ -16,14 +16,14 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
+    return len(input_array) - len(kernel_array) + 1
 
 
 # -----------------------------------------------
 # Example:
 input_array = np.array([1, 2, 3, 4, 5])
 kernel_array = np.array([1, 0, -1])
-print(compute_output_size_1d(input_array, kernel_array))
+print(f"Task 1 Output: {compute_output_size_1d(input_array, kernel_array)}")
 
 
 # Task 2: 1D Convolution
@@ -35,15 +35,20 @@ print(compute_output_size_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def convolve_1d(input_array, kernel_array):
+    out_size = compute_output_size_1d(input_array, kernel_array)
+    output = np.zeros(out_size)
+    for i in range(out_size):
+        output[i] = np.sum(input_array[i:i+len(kernel_array)] * kernel_array)
+    return output
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
     # Then fill the cells in the array with a loop.
-    pass
+    
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
-input_array = np.array([1, 2, 3, 4, 5])
+input_array = np.array([1, 2, 3, 4, 6])
 kernel_array = np.array([1, 0, -1])
-print(convolve_1d(input_array, kernel_array))
+print(f"Task 2 Output: {convolve_1d(input_array, kernel_array)}")
 
 # Task 3: Compute Output Size for 2D Convolution
 # Instructions:
@@ -56,7 +61,9 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
+    h_in, w_in = input_matrix.shape
+    h_k, w_k = kernel_matrix.shape
+    return (h_in - h_k + 1, w_in - w_k + 1)
 
 
 # -----------------------------------------------
@@ -70,9 +77,24 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 # Your code here:
 # -----------------------------------------------
 def convolute_2d(input_matrix, kernel_matrix):
-    # Tip: same tips as above, but you might need a nested loop here in order to
+    out_h, out_w = compute_output_size_2d(input_matrix, kernel_matrix)
+    output = np.zeros((out_h, out_w))
+    kh, kw = kernel_matrix.shape
+    for i in range(out_h):
+        for j in range(out_w):
+            output[i, j] = np.sum(input_matrix[i:i+kh, j:j+kw] * kernel_matrix)
+    return output   # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
+
 
 
 # -----------------------------------------------
+# Example:
+input_matrix = np.array([[2, 2, 3], [4, 5, 6], [7, 8, 10]])
+
+kernel_matrix = np.array([[1, 0],
+                          [0, -1]])
+
+print(f"Task 3 Output: {compute_output_size_2d(input_matrix, kernel_matrix)}")
+print("Task 4 Output:")
+print(convolute_2d(input_matrix, kernel_matrix))
